@@ -4,7 +4,7 @@ import json
 import os
 
 # Define the image name, assuming it's built as 'base-lambda-scraper'
-DOCKER_IMAGE_NAME = "base-lambda-scraper"
+DOCKER_IMAGE_NAME = "scraper-base-fedora"
 
 
 class TestScrapingLogic(unittest.TestCase):
