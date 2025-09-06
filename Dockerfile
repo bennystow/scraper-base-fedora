@@ -13,9 +13,9 @@ COPY ./chrome-installer.sh ./chrome-installer.sh
 RUN chmod +x ./chrome-installer.sh && ./chrome-installer.sh && rm ./chrome-installer.sh
 
 # This will install dependencies into the Python environment where Lambda can find it.
-COPY requirements.txt .
+COPY pyproject.toml .
 
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir .
 
 ENV RUNNING_IN_DOCKER=true
 

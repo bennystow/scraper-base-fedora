@@ -1,21 +1,21 @@
 # Add these functions outside the Config class
 import os
 import logging
-
-logger = logging.getLogger(__name__)
-
 from tempfile import mkdtemp
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
+
+logger = logging.getLogger(__name__)
 
 
 def is_running_in_docker():
     # Check for a common Docker environment variable
     # Also check for GITHUB_ACTIONS, which is set by GitHub Actions and the 'act' tool.
     # This makes the detection more robust for CI/CD environments.
-    in_docker = os.environ.get('RUNNING_IN_DOCKER', '').lower() in ('true', '1')
-    in_ci = os.environ.get('GITHUB_ACTIONS', '').lower() == 'true'
+    in_docker = os.environ.get("RUNNING_IN_DOCKER", "").lower() in ("true", "1")
+    in_ci = os.environ.get("GITHUB_ACTIONS", "").lower() == "true"
     return in_docker or in_ci
+
 
 def get_chrome_options(headless_override=None):
     """
@@ -29,8 +29,8 @@ def get_chrome_options(headless_override=None):
     chrome_options = Options()
     # Common options for both environments
     chrome_options.add_argument("--window-size=1920,1080")
-    chrome_options.add_argument("--log-level=3") # Suppress console noise
-    chrome_options.add_experimental_option('excludeSwitches', ['enable-logging']) # Suppress DevTools messages
+    chrome_options.add_argument("--log-level=3")  # Suppress console noise
+    chrome_options.add_experimental_option("excludeSwitches", ["enable-logging"])  # Suppress DevTools messages
     # Determine headless mode
     run_headless = headless_override if headless_override is not None else is_running_in_docker()
 
@@ -56,14 +56,15 @@ def get_chrome_options(headless_override=None):
 
     return chrome_options
 
+
 def get_chrome_service(headless_override=None):
     if is_running_in_docker():
-        logger.info('SERVICE - Running in Docker environment')
+        logger.info("SERVICE - Running in Docker environment")
         return Service(
-        executable_path="/opt/chrome-driver/chromedriver-linux64/chromedriver",
-        service_log_path="/tmp/chromedriver.log"
+            executable_path="/opt/chrome-driver/chromedriver-linux64/chromedriver",
+            service_log_path="/tmp/chromedriver.log",
         )
-        
+
     else:
-        logger.info('SERVICE - Running in local environment')
+        logger.info("SERVICE - Running in local environment")
         return None

@@ -1,16 +1,51 @@
-# Select virtual environment and run main file
-activate venv
-`.\.venv\Scripts\activate`
+# Scraper Base Fedora
 
-run main
-`python -m src.main`
+This is a base project for a web scraper running on Fedora.
 
+## Getting Started
 
-# base-lambda-scraper
-[claude multi docker chat](https://claude.ai/chat/dbda571c-85f3-421f-a1c3-b854627d12e5)
+### Prerequisites
 
+- Python 3.12 or later
+- Docker
 
-Build the container
-`docker build -t base-lambda-scraper .`
+### Installation
 
-docker run base-lambda-scraper
+1.  Clone the repository:
+
+    ```bash
+    git clone <repository-url>
+    cd scraper-base-fedora
+    ```
+
+2.  Create a virtual environment and activate it:
+
+    ```bash
+    python -m venv venv
+    py -3.12 venv .venv
+    source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
+    ```
+
+3.  Install the dependencies:
+    ```bash
+    pip install -e .
+    ```
+
+### Running the Scraper
+
+```bash
+python -m src.main
+```
+
+### Building and Running with Docker
+
+1.  Build the Docker image:
+
+    ```bash
+    docker build -t scraper-base-fedora .
+    ```
+
+2.  Run the Docker container:
+    ```bash
+    docker run scraper-base-fedora
+    ```

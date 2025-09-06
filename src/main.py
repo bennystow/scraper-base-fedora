@@ -1,20 +1,19 @@
 # Add these functions outside the Config class
-import os
 import json
-import sys # Required for sys.stderr
+import sys  # Required for sys.stderr
 import logging
-
-logger = logging.getLogger(__name__)
-
-# Third-party imports
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from src.utils.utils import get_chrome_options, get_chrome_service, is_running_in_docker # Import from utils
+from src.utils.utils import get_chrome_options, get_chrome_service, is_running_in_docker  # Import from utils
+
+logger = logging.getLogger(__name__)
 
 
 class ScrapingError(Exception):
     """Custom exception for scraping failures."""
+
     pass
+
 
 def scrape_h2_tags_from_webscraper_io():
     """
@@ -33,10 +32,7 @@ def scrape_h2_tags_from_webscraper_io():
     try:
         logger.info("INFO: Setting up Chrome WebDriver using utils configuration...")
         # WebDriver setup uses get_chrome_service() and get_chrome_options() from .utils
-        driver = webdriver.Chrome(
-            service=get_chrome_service(),
-            options=get_chrome_options()
-        )
+        driver = webdriver.Chrome(service=get_chrome_service(), options=get_chrome_options())
         logger.info("INFO: WebDriver setup complete.")
 
         url = "https://webscraper.io/test-sites/tables"
@@ -70,12 +66,13 @@ def scrape_h2_tags_from_webscraper_io():
             driver.quit()
             logger.info("INFO: WebDriver closed.")
 
-if __name__ == "__main__": # Standard check for script execution
+
+if __name__ == "__main__":  # Standard check for script execution
     # Configure basic logging to show INFO level messages on stderr
     logging.basicConfig(
         level=logging.INFO,
-        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-        stream=sys.stderr  # Explicitly send logs to stderr
+        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+        stream=sys.stderr,  # Explicitly send logs to stderr
     )
 
     try:
@@ -85,9 +82,11 @@ if __name__ == "__main__": # Standard check for script execution
         # Print the JSON result to STDOUT for consumption by other scripts/tests.
         print(json_output)
     except ScrapingError as se:
-        logger.error(f"Scraping failed: {se}") # Use logger.error for known operational errors
-        sys.exit(1) # Exit with a non-zero status code to indicate failure
+        logger.error(f"Scraping failed: {se}")  # Use logger.error for known operational errors
+        sys.exit(1)  # Exit with a non-zero status code to indicate failure
     except Exception as e:
         # Catch any other unexpected errors during the top-level execution
-        logger.critical(f"An unexpected error occurred in main execution: {e}", exc_info=True) # Use logger.critical for severe unexpected errors
+        logger.critical(
+            f"An unexpected error occurred in main execution: {e}", exc_info=True
+        )  # Use logger.critical for severe unexpected errors
         sys.exit(1)
