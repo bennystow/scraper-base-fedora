@@ -21,9 +21,8 @@ This is a base project for a web scraper running on Fedora.
 2.  Create a virtual environment and activate it:
 
     ```bash
-    python -m venv venv
-    py -3.12 venv .venv
-    source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
+    python -m venv .venv
+    source .venv/bin/activate  # On Windows, use `.venv\Scripts\activate`
     ```
 
 3.  Install the dependencies:
